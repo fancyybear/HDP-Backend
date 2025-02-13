@@ -33,6 +33,7 @@ def home(request):
   slop = request.POST.get('slop')
   ca = request.POST.get('ca')
   thal = request.POST.get('thal')
+  age = ""
   age = int(age)
   gender=int(gender)
   cp=int(cp)
