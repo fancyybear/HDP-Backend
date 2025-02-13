@@ -3,36 +3,48 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 
-import pandas as pd
 
-import matplotlib.pyplot as plt
-from io import StringIO
-import numpy as np
+# import matplotlib.pyplot as plt
+# from io import StringIO
+# import numpy as np
+# import pandas as pd
+# import matplotlib.pyplot as plt
+# import warnings
+# from sklearn.model_selection import KFold,cross_val_score
+# from sklearn.model_selection import train_test_split
+# from sklearn.tree import DecisionTreeClassifier
+# import os
+# from django.conf import settings
+import os
 import pandas as pd
-import matplotlib.pyplot as plt
-import warnings
-from sklearn.model_selection import KFold,cross_val_score
+import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
-import os
 from django.conf import settings
-
 
 @csrf_exempt
 def home(request):
-  age = request.POST.get('age')  # Retrieve 'age' field
-  gender = request.POST.get('gender')
-  cp = request.POST.get('cp')
-  chol = request.POST.get('chol')
-  trestbps = request.POST.get('trestbps')
-  fbs = request.POST.get('fbs')
-  restcg = request.POST.get('restcg')
-  thalach = request.POST.get('thalach')
-  exang = request.POST.get('exang')
-  oldpeak = request.POST.get('oldpeak')
-  slop = request.POST.get('slop')
-  ca = request.POST.get('ca')
-  thal = request.POST.get('thal')
+  age = request.POST.get('age', 0)  # Default to 0 if missing
+  if age is None or age == "":
+    return JsonResponse({"error": "Age is required"}, status=400)
+  try:
+    age = int(request.POST.get('age', 0))
+    gender = int(request.POST.get('gender', 0))
+    cp = int(request.POST.get('cp', 0))
+    chol = int(request.POST.get('chol', 0))
+    trestbps = int(request.POST.get('trestbps', 0))
+    fbs = int(request.POST.get('fbs', 0))
+    restcg = int(request.POST.get('restcg', 0))
+    thalach = int(request.POST.get('thalach', 0))
+    exang = int(request.POST.get('exang', 0))
+    oldpeak = float(request.POST.get('oldpeak', 0))
+    slop = int(request.POST.get('slop', 0))
+    ca = int(request.POST.get('ca', 0))
+    thal = int(request.POST.get('thal', 0))
+  except ValueError:
+    return JsonResponse({"error": "Invalid input format"}, status=400)
+
+
 
  
   gender=int(gender)
@@ -50,6 +62,10 @@ def home(request):
 
 
   csv_path = os.path.join(settings.BASE_DIR, 'data', 'heart_disease-data.csv')
+
+  if not os.path.exists(csv_path):
+    return JsonResponse({"error": "CSV file not found"}, status=500)
+  
   df = pd.read_csv(csv_path)
   x=df.drop(columns='target',axis=1)
   y=df['target']
