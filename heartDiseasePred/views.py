@@ -24,22 +24,22 @@ from django.conf import settings
 
 @csrf_exempt
 def home(request):
-  age = request.GET.get('age', 0)  # Default to 0 if missing
+  age = request.POST.get('age', 0)  # Default to 0 if missing
  
   try:
-    age = int(request.GET.get('age', 0))
-    gender = int(request.GET.get('gender', 0))
-    cp = int(request.GET.get('cp', 0))
-    chol = int(request.GET.get('chol', 0))
-    trestbps = int(request.GET.get('trestbps', 0))
-    fbs = int(request.GET.get('fbs', 0))
-    restcg = int(request.GET.get('restcg', 0))
-    thalach = int(request.GET.get('thalach', 0))
-    exang = int(request.GET.get('exang', 0))
-    oldpeak = float(request.GET.get('oldpeak', 0))
-    slop = int(request.GET.get('slop', 0))
-    ca = int(request.GET.get('ca', 0))
-    thal = int(request.GET.get('thal', 0))
+    age = int(request.POST.get('age', 0),0)
+    gender = int(request.POST.get('gender', 0),0)
+    cp = int(request.POST.get('cp', 0),0)
+    chol = int(request.POST.get('chol', 0))
+    trestbps = int(request.POST.get('trestbps', 0),0)
+    fbs = int(request.POST.get('fbs', 0),0)
+    restcg = int(request.POST.get('restcg', 0),0)
+    thalach = int(request.POST.get('thalach', 0),0)
+    exang = int(request.POST.get('exang', 0),0)
+    oldpeak = float(request.POST.get('oldpeak', 0),0)
+    slop = int(request.POST.get('slop', 0),0)
+    ca = int(request.POST.get('ca', 0),0)
+    thal = int(request.POST.get('thal', 0),0)
   except ValueError:
     return JsonResponse({"error": "Invalid input format"}, status=400)
 
