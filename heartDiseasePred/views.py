@@ -41,7 +41,7 @@ def home(request):
 
 
 
- 
+  age=int(age)
   gender=int(gender)
   cp=int(cp)
   chol=int(chol)
@@ -70,7 +70,7 @@ def home(request):
   dt=DecisionTreeClassifier()
   y_pred = dt.fit(x_train,y_train)
   # inp=(62,1,0,140,268,0,0,160,0,3.6,0,2,2)
-  inp=(int(age),gender,cp,trestbps,chol,fbs,restcg,thalach,exang,oldpeak,slop,ca,thal)
+  inp=(age,gender,cp,trestbps,chol,fbs,restcg,thalach,exang,oldpeak,slop,ca,thal)
   arr=np.array(inp)
   print(inp)
   pred=y_pred.predict(arr.reshape(1,-1))
